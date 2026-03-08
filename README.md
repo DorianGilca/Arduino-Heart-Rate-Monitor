@@ -1,4 +1,4 @@
- Arduino Heart Rate Monitor
+# Arduino Heart Rate Monitor
 
 This is an embedded hardware project that reads and displays human heart rate (BPM) in real-time. The system uses an Arduino UNO microcontroller to interface with an optical pulse oximeter sensor and outputs the data to an LCD screen.
 
