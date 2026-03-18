@@ -1,6 +1,6 @@
-# Arduino Heart Rate Monitor
+# Smart Heart Rate Monitor (Arduino C++)
 
-This is an embedded hardware project that reads and displays human heart rate (BPM) in real-time. The system uses an Arduino UNO microcontroller to interface with an optical pulse oximeter sensor and outputs the data to an LCD screen.
+A hands-on hardware project I built to experiment with reading and processing physical sensor data in real-time. The system uses an Arduino UNO microcontroller to interface with an optical pulse oximeter sensor, calculating the human heart rate (BPM) and outputting the data to an LCD screen via the I2C protocol.
 
 ## Hardware Components
 * Arduino UNO (ATmega328P)
@@ -14,12 +14,13 @@ Both the display and the pulse sensor use the I2C communication protocol. To opt
 * SCL (Clock) -> Analog Pin A5
 * Powered via the 5V Arduino pin.
 
-## Software Implementation
-The code is written in C++ using the Arduino IDE. 
-A critical aspect of the software design was avoiding blocking functions like `delay()`. Since the MAX30100 requires continuous polling at a very high frequency to detect the optical peaks of the heartbeat, using delays would overflow the I2C buffer and freeze the sensor. Instead, I implemented a non-blocking timer using the `millis()` function, allowing the sensor's `update()` loop to run continuously while updating the LCD display only once per second.
+## Software Challenges
+The main challenge was the sensor's polling requirement. The MAX30100 requires continuous, high-frequency polling to detect the optical peaks of a heartbeat. Using standard blocking functions like `delay()` for the screen refresh would overflow the I2C buffer and freeze the sensor entirely. 
+
+To solve this, I wrote non-blocking timer logic using the `millis()` function. This allows the sensor's `update()` loop to run continuously in the background, while the LCD display is only triggered to update once per second.
 
 ## How to use
-1. Wire the components according to the provided schematic.
-2. Install the `LiquidCrystal_I2C` and `MAX30100_PulseOximeter` libraries in your Arduino IDE.
+1. Wire the components according to the I2C schematic.
+2. Install the `LiquidCrystal_I2C` and `MAX30100_PulseOximeter` libraries in the Arduino IDE.
 3. Flash the `.ino` code to the Arduino UNO.
-4. Place your finger firmly on the MAX30100 sensor and wait a few seconds for the initial BPM reading to calibrate and appear on the screen.
+4. Place your finger firmly on the MAX30100 sensor and wait a few seconds for the initial BPM reading to calibrate.
