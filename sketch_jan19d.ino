@@ -14,7 +14,7 @@ void onBeatDetected() {
 
 void setup() {
     Serial.begin(115200);
-    Serial.println("Test MAX30100...");
+    Serial.println("Initializare MAX30100...");
 
     lcd.begin();
     lcd.backlight();
@@ -22,7 +22,7 @@ void setup() {
     lcd.print("Init Puls...");
 
     if (!pox.begin()) {
-        Serial.println("Eroare MAX30100! Verifica conexiunile.");
+        Serial.println("Eroare MAX30100! Verifica conexiunile I2C.");
         lcd.setCursor(0, 1);
         lcd.print("Eroare senzor!");
         while (1); 
@@ -58,7 +58,7 @@ void loop() {
             Serial.println(" BPM");
         } else {
             lcd.print("--");
-            Serial.println("Nu s-a detectat puls.");
+            Serial.println("Nu s-a detectat puls stabil.");
         }
 
         lastReportTime = millis();
